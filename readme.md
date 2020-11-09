@@ -6,7 +6,7 @@
 
 ```
 $ cd docker-pycdk
-$ docker build . -t pycdk:1-71-0 -t pycdk:active -t pycdk:latest
+$ docker build . -t pycdk:1-72-0 -t pycdk:active -t pycdk:latest
 ```
 
 ### Bash Profile Script
