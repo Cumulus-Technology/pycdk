@@ -1,7 +1,7 @@
 FROM python:3.9-alpine
 
 LABEL maintainer="mike@cumulustech.us"
-LABEL cdk_version=1.72.0
+LABEL cdk_version=1.79.0
 
 #Setup
 RUN mkdir /proj
@@ -20,7 +20,7 @@ ENV VIRTUAL_ENV=/proj/.env
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 #node and cdk
-RUN npm install -g aws-cdk@1.72.0
+RUN npm install -g aws-cdk@1.79.0
 
 #Matt's CDK SSO Plugin https://www.npmjs.com/package/cdk-cross-account-plugin
 RUN npm i -g cdk-cross-account-plugin aws-sdk
