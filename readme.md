@@ -2,18 +2,20 @@
 
 ## Setup
 
-### Image Build
-
-```
-$ cd docker-pycdk
-$ docker build . -t pycdk:1-79-0 -t pycdk:active -t pycdk:latest
-```
-
 ### Bash Profile Script
 
 Add env bash script to .profile or .bashrc Example:
 
 ``` . ~/docker-pycdk/cdk-bash.sh```
+
+### Docker Tag
+
+You must tag an image as "active" in order to determine which version of the cdk to use.
+
+```
+docker pull cumulusmike/pycdk:1-81-0
+docker tag cumulusmike/pycdk:1-81-0 cumulusmike/pycdk:active
+```
 
 ### AWS SSO Setup
 
@@ -50,7 +52,7 @@ $ cdkpip install -r requirements.txt
 ### Existing repo - new clone
 
 ```
-$ git clone git@github.com:cosgiant/cdk-project.git
+$ git clone git@github.com:client/cdk-project.git
 $ cd cdk-project
 $ pycdk virtualenv .env
 $ cdkpip install -r requirements.txt
@@ -70,6 +72,19 @@ $ cdkpip install -r requirements.txt
 $ sudo chown mike:mike -R *
 $ sudo chown mike:mike -R .*
 # Create GitHub repo
-$ git remote add origin git@github.com:cosgiant/cdk-project.git
+$ git remote add origin git@github.com:client/cdk-project.git
 $ git push --set-upstream origin master
+```
+
+
+
+## Maintenance
+
+### Image Build
+
+```
+$ cd docker-pycdk
+$ docker build . -t cumulusmike/pycdk:1-81-0  -t cumulusmike/pycdk:latest
+$ docker push cumulusmike/pycdk:1-81-0
+$ docker push cumulusmike/pycdk:latest
 ```
