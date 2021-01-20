@@ -20,7 +20,7 @@ ENV VIRTUAL_ENV=/proj/.env
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 #node and cdk
-RUN npm install -g aws-cdk@1.81.0
+RUN npm install -g aws-cdk@1.85.0
 
 #Matt's CDK SSO Plugin https://www.npmjs.com/package/cdk-cross-account-plugin
 RUN npm i -g cdk-cross-account-plugin aws-sdk
