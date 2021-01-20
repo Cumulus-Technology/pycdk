@@ -1,7 +1,7 @@
 FROM python:3.9-alpine
 
 LABEL maintainer="mike@cumulustech.us"
-LABEL cdk_version=1.81.0
+LABEL cdk_version=1.85.0
 
 #Setup
 RUN mkdir /proj

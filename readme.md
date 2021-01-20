@@ -13,8 +13,8 @@ Add env bash script to .profile or .bashrc Example:
 You must tag an image as "active" in order to determine which version of the cdk to use.
 
 ```
-docker pull cumulusmike/pycdk:1-81-0
-docker tag cumulusmike/pycdk:1-81-0 cumulusmike/pycdk:active
+docker pull cumulusmike/pycdk:1.85.0
+docker tag cumulusmike/pycdk:1.85.0 cumulusmike/pycdk:active
 ```
 
 ### AWS SSO Setup
@@ -80,11 +80,15 @@ $ git push --set-upstream origin master
 
 ## Maintenance
 
-### Image Build
+### Automated Image Build
+
+1. Update Dockerfile and commit changes to master branch. A build for "latest" will automatically start in Dockerhub.
+2. Create a version tag in Github and a version build/tag will automatically start in Dockerhub.
+### Manual Image Build
 
 ```
 $ cd docker-pycdk
-$ docker build . -t cumulusmike/pycdk:1-81-0  -t cumulusmike/pycdk:latest
-$ docker push cumulusmike/pycdk:1-81-0
+$ docker build . -t cumulusmike/pycdk:1.81.0  -t cumulusmike/pycdk:latest
+$ docker push cumulusmike/pycdk:1.81.0
 $ docker push cumulusmike/pycdk:latest
 ```
