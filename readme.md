@@ -13,8 +13,8 @@ Add env bash script to .profile or .bashrc Example:
 You must tag an image as "active" in order to determine which version of the cdk to use.
 
 ```
-docker pull cumulusmike/pycdk:1.85.0
-docker tag cumulusmike/pycdk:1.85.0 cumulusmike/pycdk:active
+docker pull cumulusmike/pycdk:1.86.0
+docker tag cumulusmike/pycdk:1.86.0 cumulusmike/pycdk:active
 ```
 
 ### AWS SSO Setup
@@ -35,12 +35,11 @@ Optional Verify SSO
 
 ```$ aws sts get-caller-identity --profile client-dev```
 
-###  Inline CDK Commands
+### Example Inline CDK Commands
 
 ```
 $ cdk --version
-$ pycdk virtualenv .env
-$ cdkpip install -r requirements.txt
+$ pycdk python --version
 ```
 
 ### Interactive CDK Shell
@@ -54,12 +53,9 @@ $ cdkpip install -r requirements.txt
 ```
 $ git clone git@github.com:client/cdk-project.git
 $ cd cdk-project
-$ pycdk virtualenv .env
-$ cdkpip install -r requirements.txt
 $ cdk ls
 $ cdk diff
 ```
-
 
 ### New Python CDK Project From Scracth
 
@@ -67,16 +63,13 @@ $ cdk diff
 $ mkdir cdk-project
 $ cd cdk-project
 $ cdk init --language python
-#remove and recreate .venv > .env
-$ cdkpip install -r requirements.txt
+#remove .venv or .env
 $ sudo chown mike:mike -R *
 $ sudo chown mike:mike -R .*
 # Create GitHub repo
 $ git remote add origin git@github.com:client/cdk-project.git
 $ git push --set-upstream origin master
 ```
-
-
 
 ## Maintenance
 
@@ -88,7 +81,7 @@ $ git push --set-upstream origin master
 
 ```
 $ cd docker-pycdk
-$ docker build . -t cumulusmike/pycdk:1.81.0  -t cumulusmike/pycdk:latest
-$ docker push cumulusmike/pycdk:1.81.0
+$ docker build . -t cumulusmike/pycdk:1.86.0 -t cumulusmike/pycdk:latest --build-arg CDK_VERSION=1.86.0
+$ docker push cumulusmike/pycdk:1.86.0
 $ docker push cumulusmike/pycdk:latest
 ```
