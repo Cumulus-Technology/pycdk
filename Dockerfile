@@ -6,6 +6,9 @@ LABEL maintainer="mike@cumulustech.us"
 # Set build args with defaults
 ARG CDK_VERSION=1.90.1
 
+# Set PYTHONPATH to support local/project specific packages
+ENV PYTHONPATH="/proj/.python-local"
+
 # Setup
 RUN mkdir /proj
 WORKDIR /proj
@@ -21,6 +24,7 @@ RUN apk -U --no-cache add \
 RUN pip install beautifulsoup4 requests 
 
 # Query PyPI registry for all installable CDK modules
+# (@Feb-22-2021 MR - I would like to replace this in the future with CDK monorepo -- too experimental right now)
 COPY list-cdk-packages.py .
 RUN CDK_PACKAGES=`./list-cdk-packages.py ${CDK_VERSION}` && pip install `echo $CDK_PACKAGES`
 
