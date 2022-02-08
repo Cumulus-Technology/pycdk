@@ -6,18 +6,34 @@ import requests
 import sys
 from bs4 import BeautifulSoup
 
+def log(message, **kwargs):
+    """Helper function to log diagnostic messages to stderr"""
+
+    print(message, file=sys.stderr, **kwargs)
+
+# Unpack the CDK version
+cdk_version = sys.argv[1]
+
+# Create a requests session for connection pooling
+http = requests.Session()
+
 # Request the entire PyPI package index
-print('Fetching PyPI index', file=sys.stderr, end='')
-pypi_response = requests.get('https://pypi.python.org/simple/')
-print(' ... done', file=sys.stderr)
+log('Fetching PyPI index', end='')
+pypi_response = http.get('https://pypi.python.org/simple/')
+log(' ... done')
 
 # Configure to parse HTML document
-print('Parsing response', file=sys.stderr, end='')
+log('Parsing response', end='')
 soup = BeautifulSoup(pypi_response.text, 'html.parser')
-print(' ... done', file=sys.stderr)
+log(' ... done')
 
 # Regex pattern for parsing package URLs
 pattern = '/simple/aws-cdk-(?P<package>.*)/'
+
+# Packages to ignore
+ignored_packages = [
+    'aws-quickstarts', # Does not track CDK core
+]
 
 # Iterate <a> elements that link to packages
 for package_link in soup.find_all('a'):
@@ -32,16 +48,25 @@ for package_link in soup.find_all('a'):
         if matches is None:
             continue
 
-        package_name = matches.group('package')
+        # Fetch available package versions
+        pypi_version_list = http.get(f'https://pypi.python.org{url}').text
 
-        # Ignore if the package ends in -api
-        if package_name.endswith('-api'):
-            continue
+        # Match version
+        if cdk_version in pypi_version_list:
+            # Get package name from match
+            package_name = matches.group('package')
 
-        # Ignore selected packages that are not tracking CDK core
-        if package_name in ['aws-quickstarts']:
-            continue
+            # Ignore if the package ends in -api
+            if package_name.endswith('-api'):
+                log(f'Ignoring {package_name}')
+                continue
 
-        # Print out package spec suitable for Pip
-        print(f"aws-cdk.{matches.group('package')}=={sys.argv[1]}", end=' ')
-    
+            # Ignore selected packages
+            if package_name in ignored_packages:
+                log(f'Ignoring {package_name}')
+                continue
+
+            # Print out package spec suitable for Pip
+            package_requirement = f"aws-cdk.{package_name} == {cdk_version}"
+            print(package_requirement)
+            log(package_requirement)

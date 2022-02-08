@@ -18,18 +18,23 @@ RUN apk -U --no-cache add \
     rm -rf /var/cache/apk/*
 
 # Install essential Python packages
-RUN pip install beautifulsoup4 requests 
+RUN pip install beautifulsoup4 requests
 
 # Query PyPI registry for all installable CDK modules
 COPY list-cdk-packages.py .
-RUN CDK_PACKAGES=`./list-cdk-packages.py ${CDK_VERSION}` && pip install `echo $CDK_PACKAGES`
+RUN ./list-cdk-packages.py ${CDK_VERSION} > cdk-requirements.txt &&\
+    pip install -r cdk-requirements.txt
 
 # AWS CDK, AWS SDK, and Matt's CDK SSO Plugin https://www.npmjs.com/package/cdk-cross-account-plugin
-RUN npm i -g aws-cdk@${CDK_VERSION} aws-sdk cdk-cross-account-plugin 
+RUN npm i -g aws-cdk@${CDK_VERSION} aws-sdk cdk-cross-account-plugin c9
 
 # Install additional Python packages
 # (this is positioned here to take advantage of layer caching)
 RUN pip install Jinja2 stringcase
+
+# Configure Python bytecode behavior
+ENV PYTHONDONTWRITEBYTECODE=true
+ENV PYTHONPYCACHEPREFIX=/tmp/__pycache__
 
 # Set default run command
 CMD ["/bin/bash"]

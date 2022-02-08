@@ -1,27 +1,33 @@
 # CDK Python Docker Image
 
-## Setup
+## Workstation Setup
 
 ### Bash Profile Script
 
 Add env bash script to .profile or .bashrc Example:
 
 ``` . ~/docker-pycdk/cdk-bash.sh```
-
-### Docker Tag
-
-You must tag an image as "active" in order to determine which version of the cdk to use.
-
-```
-docker pull cumulusmike/pycdk:1.86.0
-docker tag cumulusmike/pycdk:1.86.0 cumulusmike/pycdk:active
-```
-
 ### AWS SSO Setup
 
 Only needed once per workstation. Follow "Automatic configuration" instructions.  Repeat for each profile.
 
 https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html
+
+
+### Docker Tag
+
+Perform the following initially, then periodically to use the "active" cdk version. You must be logged in to AWS (see below).
+
+```
+./update-pycdk.sh
+```
+
+## AWS Account Setup - One Time
+### CloudFormation - ECR
+
+Create the docker repository with ecr.yaml.  This only needs to be executed once in the dev environment.
+
+```$ aws cloudformation create-stack --stack-name pycdk-ecr --template-body file://ecr.yaml --profile cos-sso-dev```
 
 ## Usage
 
@@ -29,11 +35,11 @@ https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html
 
 Must be performed once per session.
 
-```$ aws sso login --profile client-dev```
+```$ aws sso login --profile college-sso-dev```
 
 Optional Verify SSO
 
-```$ aws sts get-caller-identity --profile client-dev```
+```$ aws sts get-caller-identity --profile college-sso-dev```
 
 ### Example Inline CDK Commands
 
@@ -75,13 +81,17 @@ $ git push --set-upstream origin master
 
 ### Automated Image Build
 
-1. Update Dockerfile and commit changes to master branch. A build for "latest" will automatically start in Dockerhub.
-2. Create a version tag in Github and a version build/tag will automatically start in Dockerhub.
+TODO: Create Jenkins Build Job
 ### Manual Image Build
 
 ```
 $ cd docker-pycdk
-$ docker build . -t cumulusmike/pycdk:1.86.0 -t cumulusmike/pycdk:latest --build-arg CDK_VERSION=1.86.0
-$ docker push cumulusmike/pycdk:1.86.0
-$ docker push cumulusmike/pycdk:latest
+$ aws ecr get-login-password --region us-west-2 --profile college-sso-dev | docker login --username AWS --password-stdin $ECR
+$ docker build . -t $ECR/pycdk:1.86.0 -t $ECR/pycdk:latest --build-arg CDK_VERSION=1.86.0
+$ docker push $ECR/pycdk:1.86.0
+$ docker push $ECR/pycdk:latest
 ```
+
+
+
+
