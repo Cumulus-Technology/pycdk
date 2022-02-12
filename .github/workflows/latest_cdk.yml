@@ -1,7 +1,7 @@
 # Workflow will build a new PyCDK image based on the
 # latest version from AWS.
 
-name: Build and publish docker image for the latest CDK
+name: Build the latest CDK
 
 # Controls when the workflow will run
 on:
