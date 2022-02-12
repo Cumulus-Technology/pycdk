@@ -18,7 +18,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: pycdk
+  IMAGE_NAME: Cumulus-Technology/pycdk
 
 jobs:
   build-and-push-image:
