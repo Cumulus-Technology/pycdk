@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: >
+  Elastic Container Registry for CDK Docker images.  Registeries, repositories, lifecycles and repo policies.
+
+Mappings: 
+  LifecycleMap: 
+    ImgCount3: 
+      Policy: 
+        '{
+          "rules": [
+            {
+              "action": {
+                "type": "expire"
+              },
+              "selection": {
+                "countType": "imageCountMoreThan",
+                "countNumber": 10,
+                "tagStatus": "any"
+              },
+              "description": "10 images max",
+              "rulePriority": 10
+            }
+          ]
+        }'
+  PolicyMap: 
+    AccountAccess: 
+      ProdPolicy: 
+        '{
+          "Version": "2008-10-17",
+          "Statement": [
+            {
+              "Sid": "AllowPull",
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": "arn:aws:iam::477180502246:root"
+              },
+              "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:BatchGetImage",
+                "ecr:GetDownloadUrlForLayer"
+              ]
+            }
+          ]
+        }'
+
+
+Resources:
+  PyCdkEcr:
+      Type: AWS::ECR::Repository
+      Properties:
+          LifecyclePolicy:
+            LifecyclePolicyText: !FindInMap [LifecycleMap, ImgCount3, Policy]
+          RepositoryPolicyText: !FindInMap [PolicyMap, AccountAccess, ProdPolicy]
+          RepositoryName: !Sub "pycdk"
+
+
+Outputs: 
+    PyCdkEcrOut:
+        Description: ECR Repo
+        Value: !Ref PyCdkEcr
+        Export:
+          Name: PYCDK-ECR
