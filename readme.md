@@ -4,7 +4,7 @@
 
 ### Bash Profile Script
 
-Add env bash script to .profile or .bashrc Example:
+Add env bash script to .profile or .bashrc (or .zshenv on a Mac). Example:
 
 ``` . ~/pycdk/cdk-bash.sh```
 
@@ -53,6 +53,14 @@ $ pycdk python --version
 ### Interactive CDK Shell
 
 ```$ pycdk```
+
+### Change CDK Version
+
+Use the following to change the CDK version.
+```export PYCDKVER=2.12.0```
+
+This will only persist for the shell session.  To make a permanent change, edit the cdk-bash.sh script.
+
 
 ## Cheat Sheets
 
