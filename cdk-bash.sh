@@ -17,3 +17,7 @@ alias aws='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cl
 alias pycdk='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/proj $REGISTRY/pycdk:$PYCDKVER' 
 alias cdk='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/proj $REGISTRY/pycdk:$PYCDKVER cdk' 
 alias cdkpip='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/proj $REGISTRY/pycdk:$PYCDKVER pip' 
+
+echo "Attempt to set pycdk version based on project. If this fails, latest will be used."
+source cdk_ver.sh
+echo "Pycdk Version: $PYCDKVER"
