@@ -4,9 +4,18 @@
 
 ### Bash Profile Script
 
-Add env bash script to .profile or .bashrc Example:
+Add env bash script to .profile or .bashrc (or .zshenv on a Mac). Example:
 
-``` . ~/docker-pycdk/cdk-bash.sh```
+``` . ~/pycdk/cdk-bash.sh```
+
+### Github Access Token
+
+Create a PAT using the following instructions: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+
+ - Only give this PAT the scope to "Read Packages".
+
+Save your PAT to your home directory as:  ~/.github_pat_pycdk
+
 ### AWS SSO Setup
 
 Only needed once per workstation. Follow "Automatic configuration" instructions.  Repeat for each profile.
@@ -21,13 +30,6 @@ Perform the following initially, then periodically to use the "active" cdk versi
 ```
 ./update-pycdk.sh
 ```
-
-## AWS Account Setup - One Time
-### CloudFormation - ECR
-
-Create the docker repository with ecr.yaml.  This only needs to be executed once in the dev environment.
-
-```$ aws cloudformation create-stack --stack-name pycdk-ecr --template-body file://ecr.yaml --profile cos-sso-dev```
 
 ## Usage
 
@@ -51,6 +53,14 @@ $ pycdk python --version
 ### Interactive CDK Shell
 
 ```$ pycdk```
+
+### Change CDK Version
+
+Use the following to change the CDK version.
+```export PYCDKVER=2.12.0```
+
+This will only persist for the shell session.  To make a permanent change, edit the cdk-bash.sh script.
+
 
 ## Cheat Sheets
 
@@ -81,8 +91,18 @@ $ git push --set-upstream origin master
 
 ### Automated Image Build
 
-TODO: Create Jenkins Build Job
-### Manual Image Build
+Build instructions are located in the workflows directory. Cumulus maintains current docker images in the Github Pacakge: ghcr.io/cumulus-technology/pycdk:latest 
+
+## AWS Account Setup - One Time
+### CloudFormation - ECR
+
+Create the docker repository with ecr.yaml.  This only needs to be executed once in the dev environment.
+
+```$ aws cloudformation create-stack --stack-name pycdk-ecr --template-body file://ecr.yaml --profile cos-sso-dev```
+
+### Manual Image Build (AWS)
+
+The following instructions were used to host in AWS but are no longer used.
 
 ```
 $ cd docker-pycdk
