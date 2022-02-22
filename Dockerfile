@@ -4,7 +4,7 @@ FROM python:3.9-alpine
 LABEL maintainer="mike@cumulustech.us"
 
 # Set build args with defaults
-ARG CDK_VERSION=1.86.0
+ARG CDK_VERSION=2.12.0
 
 # Setup
 RUN mkdir /proj

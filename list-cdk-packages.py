@@ -40,7 +40,7 @@ for package_link in soup.find_all('a'):
     url = package_link.get('href')
 
     # Using filename style pattern matching to identify AWS CDK modules
-    if fnmatch.fnmatch(url, '/simple/aws-cdk-aws*'):
+    if fnmatch.fnmatch(url, '/simple/aws-cdk-lib*'):
         # Parse package name
         matches = re.search(pattern, url)
 
