@@ -31,13 +31,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Latest Github Release Tag
-        uses: rez0n/actions-github-release@v1.7
+      # Force 2.2.0
+      - name: CDK Version Hard-Code
         id: cdk_release
-        env:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: "aws/aws-cdk"
-          type: "latest"
+        run: echo "::set-output name=release::v2.2.0"
 
       # Remove the v from version tag
       - name: CDK Version From Tag
