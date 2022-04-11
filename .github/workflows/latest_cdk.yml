@@ -5,8 +5,8 @@ name: Build the latest CDK
 
 # Controls when the workflow will run
 on:
-  schedule:
-    - cron: '00 15 * * *'
+  # schedule:
+  #   - cron: '00 15 * * *'
   # Triggers the workflow on push or pull request events but only for the main branch
 #   push:
 #     branches: [ main ]
@@ -64,7 +64,6 @@ jobs:
           tags: |
             type=raw,value=${{steps.get-ver.outputs.cdkver}}
             type=raw,value=${{steps.cdk_release.outputs.release}}
-            type=raw,value=latest
       - name: Build and push Docker image
         uses: docker/build-push-action@v2.9.0
         with:
