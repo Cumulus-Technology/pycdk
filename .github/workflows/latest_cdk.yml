@@ -31,10 +31,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Force 2.2.0
+      # Force 1.145.0
       - name: CDK Version Hard-Code
         id: cdk_release
-        run: echo "::set-output name=release::v2.2.0"
+        run: echo "::set-output name=release::v1.145.0"
 
       # Remove the v from version tag
       - name: CDK Version From Tag
