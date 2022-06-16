@@ -33,7 +33,7 @@ Mappings:
               "Sid": "AllowPull",
               "Effect": "Allow",
               "Principal": {
-                "AWS": "arn:aws:iam::477180502246:root"
+                "AWS": "arn:aws:iam::249404873252:root"
               },
               "Action": [
                 "ecr:BatchCheckLayerAvailability",
