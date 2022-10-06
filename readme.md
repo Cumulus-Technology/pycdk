@@ -54,6 +54,16 @@ $ pycdk python --version
 
 ```$ pycdk```
 
+### Pip and installing Packages
+
+Use the following command to install a python package locally:
+
+```cdkpip install --target .python-local [my-package]```
+
+To view installed packages, you can use:
+
+```cdkpip list```
+
 ### Change CDK Version
 
 Use the following to change the CDK version.

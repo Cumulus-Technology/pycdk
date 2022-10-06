@@ -14,9 +14,9 @@ export REGISTRY='ghcr.io/cumulus-technology'
 export PYCDKVER=latest
 
 alias aws='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli' 
-alias pycdk='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/proj $REGISTRY/pycdk:$PYCDKVER' 
-alias cdk='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/proj $REGISTRY/pycdk:$PYCDKVER cdk' 
-alias cdkpip='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/proj $REGISTRY/pycdk:$PYCDKVER pip' 
+alias pycdk='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/proj -e PYTHONPATH=".python-local" $REGISTRY/pycdk:$PYCDKVER' 
+alias cdk='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/proj -e PYTHONPATH=".python-local" $REGISTRY/pycdk:$PYCDKVER cdk' 
+alias cdkpip='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/proj -e PYTHONPATH=".python-local" $REGISTRY/pycdk:$PYCDKVER pip' 
 
 echo "Attempt to set pycdk version based on project. If this fails, latest will be used."
 source cdk_ver.sh
