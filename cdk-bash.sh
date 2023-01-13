@@ -1,6 +1,6 @@
 # Docker CDK Bash Env Setup
 # Add to .profile or .bashrc Example:
-#  . ~/docker-pycdk/cdk-bash.sh
+#  . ~/pycdk/cdk-bash.sh
 
 #AWS Example
 # export REGISTRY='421327123456.dkr.REGISTRY.us-west-2.amazonaws.com'
