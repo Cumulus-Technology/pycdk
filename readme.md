@@ -1,14 +1,15 @@
 # CDK Python Docker Image
 
+
 ## Workstation Setup
 
-### Bash Profile Script
+### 1 - Bash Profile Script
 
 Add env bash script to .profile or .bashrc (or .zshenv on a Mac). Example:
 
 ``` . ~/pycdk/cdk-bash.sh```
 
-### Github Access Token
+### 2 - Github Access Token
 
 Create a PAT using the following instructions: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 
@@ -16,20 +17,29 @@ Create a PAT using the following instructions: https://docs.github.com/en/authen
 
 Save your PAT to your home directory as:  ~/.github_pat_pycdk
 
-### AWS SSO Setup
+### 3 - AWS SSO Setup
 
-Only needed once per workstation. Follow "Automatic configuration" instructions.  Repeat for each profile.
+Use the following aws cli command to configure each of your AWS SSO profiles.
 
-https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html
+```$ aws configure sso```
+
+__*IMPORTANT!*__
+
+When prompted for "SSO session name" DO NOT supply a session name.  If a name is supplied the pycdk context switching will not recognize the SSO profile.
 
 
-### Docker Tag
+This step is only needed once per workstation. For more information see: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html
+
+
+### 4 - Docker Tag
 
 Perform the following initially, then periodically to use the "active" cdk version. You must be logged in to AWS (see below).
 
 ```
 ./update-pycdk.sh
 ```
+
+---
 
 ## Usage
 
@@ -69,8 +79,9 @@ To view installed packages, you can use:
 Use the following to change the CDK version.
 ```export PYCDKVER=2.12.0```
 
-This will only persist for the shell session.  To make a permanent change, edit the cdk-bash.sh script.
+This will only persist for the shell session.  To make a permanent change, edit the cdk-bash.sh script located in your CDK project.
 
+---
 
 ## Cheat Sheets
 
