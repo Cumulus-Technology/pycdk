@@ -27,7 +27,7 @@ RUN ./list-cdk-packages.py ${CDK_VERSION} > cdk-requirements.txt &&\
 
 # AWS CDK, AWS SDK, and Matt's CDK SSO Plugin https://www.npmjs.com/package/cdk-cross-account-plugin
 # RUN npm i -g aws-cdk@${CDK_VERSION} aws-sdk cdk-cross-account-plugin
-RUN npm i -g aws-cdk@${CDK_VERSION} aws-sdk https://github.com/ahsenbaig-forks/cdk-cross-account-plugin
+RUN npm i -g aws-cdk@${CDK_VERSION} aws-sdk @ahsenbaig-forks/cdk-cross-account-plugin@3.0.0
 
 # Install additional Python packages
 # (this is positioned here to take advantage of layer caching)
