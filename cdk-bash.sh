@@ -19,5 +19,8 @@ alias cdk='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/proj -e PYTHONPAT
 alias cdkpip='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/proj -e PYTHONPATH=".python-local" $REGISTRY/pycdk:$PYCDKVER pip' 
 
 echo "Attempt to set pycdk version based on project. If this fails, latest will be used."
-source cdk_ver.sh
+if [ -f cdk_ver.sh ]; then
+    source cdk_ver.sh
+fi
+
 echo "Pycdk Version: $PYCDKVER"
