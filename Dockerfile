@@ -13,6 +13,8 @@ RUN apk -U --no-cache add \
     bash \
     git \
     curl \
+    nodejs \
+    npm &&\
     rm -rf /var/cache/apk/*
 
 # Install essential Python packages
