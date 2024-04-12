@@ -23,6 +23,9 @@ COPY list-cdk-packages.py .
 RUN ./list-cdk-packages.py ${CDK_VERSION} > cdk-requirements.txt &&\
     pip install -r cdk-requirements.txt
 
+# AWS CDK, AWS SDK
+RUN npm i -g aws-cdk@${CDK_VERSION} aws-sdk
+
 # Install additional Python packages
 # (this is positioned here to take advantage of layer caching)
 RUN pip install Jinja2 stringcase
