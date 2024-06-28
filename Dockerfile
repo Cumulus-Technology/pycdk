@@ -30,7 +30,7 @@ RUN npm i -g aws-cdk@${CDK_VERSION} aws-sdk
 
 # Install additional Python packages
 # (this is positioned here to take advantage of layer caching)
-RUN pip install Jinja2 stringcase
+RUN pip install Jinja2 stringcase boto3
 
 # Configure Python bytecode behavior
 ENV PYTHONDONTWRITEBYTECODE=true
