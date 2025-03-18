@@ -44,11 +44,31 @@ jobs:
         id: get-ver
         run: |
           ver=$(echo ${{steps.cdk_release.outputs.release}} | cut -dv -f2)
+          echo "::set-output name=cdknpmver::$ver"
+      # Debug output the CDK version
+      - name: CDK NPM Version From Tag
+        env: 
+          VER: ${{ steps.get-ver.outputs.cdknpmver }}
+        run: echo Latest NPM CDK Version $VER
+        
+      - name: Latest Github Release Tag
+        uses: rez0n/actions-github-release@v2.0
+        id: cdk_release2
+        env:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: "aws/aws-cdk"
+          type: "latest"
+
+      # Remove the v from version tag
+      - name: CDK Version From Tag
+        id: get-ver2
+        run: |
+          ver=$(echo ${{steps.cdk_release2.outputs.release}} | cut -dv -f2)
           echo "::set-output name=cdkver::$ver"
       # Debug output the CDK version
-      - name: CDK Version From Tag
+      - name: CDK CLI Version From Tag
         env: 
-          VER: ${{ steps.get-ver.outputs.cdkver }}
+          VER: ${{ steps.get-ver2.outputs.cdkver }}
         run: echo Latest CDK Version $VER
 
       #Start Docker Build
@@ -75,4 +95,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: CDK_VERSION=${{ steps.get-ver.outputs.cdkver }}
+          build-args: |
+            "CDK_VERSION=${{ steps.get-ver2.outputs.cdkver }}"
+            "CDK_NPM_VERSION=${{ steps.get-ver.outputs.cdknpmver }}"
