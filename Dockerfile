@@ -5,6 +5,7 @@ LABEL maintainer="mike@cumulustech.us"
 
 # Set build args with defaults
 ARG CDK_VERSION=2.178.1
+ARG NPM_CDK_VERSION=2.1004.0
 
 # Setup
 RUN mkdir /proj
@@ -26,7 +27,7 @@ RUN ./list-cdk-packages.py ${CDK_VERSION} > cdk-requirements.txt &&\
     pip install -r cdk-requirements.txt
 
 # AWS CDK, AWS SDK
-RUN npm i -g aws-cdk@${CDK_VERSION} aws-sdk
+RUN npm i -g aws-cdk@${NPM_CDK_VERSION} aws-sdk
 
 # Install additional Python packages
 # (this is positioned here to take advantage of layer caching)
