@@ -85,8 +85,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{steps.get-ver.outputs.cdkver}}
-            type=raw,value=${{steps.cdk_release.outputs.release}}
+            type=raw,value=${{steps.get-ver2.outputs.cdkver}}
+            type=raw,value=${{steps.cdk_release2.outputs.release}}
             type=raw,value=latest
       - name: Build and push Docker image
         uses: docker/build-push-action@v6.13.0
