@@ -36,7 +36,7 @@ jobs:
         id: cdk_release
         env:
           token: ${{ secrets.GITHUB_TOKEN }}
-          repository: "aws/aws-cdk"
+          repository: "aws/aws-cdk-cli"
           type: "latest"
 
       # Remove the v from version tag
