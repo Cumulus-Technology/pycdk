@@ -11,6 +11,9 @@ def log(message, **kwargs):
 
     print(message, file=sys.stderr, **kwargs)
 
+#install this module
+print ("constructs")
+
 # Unpack the CDK version
 cdk_version = sys.argv[1]
 
