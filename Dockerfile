@@ -1,11 +1,11 @@
-# Set build args with defaults
-ARG CDK_VERSION=2.178.1
-ARG NPM_CDK_VERSION=2.1004.0
-
 FROM python:3.12.9-alpine
 
 # Set image labels
 LABEL maintainer="mike@cumulustech.us"
+
+# Set build args with defaults
+ARG CDK_VERSION=2.178.1
+ARG NPM_CDK_VERSION=2.1018.1
 
 # Setup
 RUN mkdir /proj
