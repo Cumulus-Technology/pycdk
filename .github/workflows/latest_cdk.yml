@@ -31,19 +31,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Latest Github Release Tag
-        uses: rez0n/actions-github-release@v2.0
-        id: cdk_release
-        env:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: "aws/aws-cdk-cli"
-          type: "latest"
-
-      # Remove the v from version tag
-      - name: CDK Version From Tag
+      - name: Latest CDK CLI Release Tag
         id: get-ver
         run: |
-          ver=$(echo ${{steps.cdk_release.outputs.release}} | cut -dv -f2)
+          ver=$(curl -s https://registry.npmjs.org/aws-cdk | grep 1018 | jq -r '."dist-tags".latest')
           echo "::set-output name=cdknpmver::$ver"
       # Debug output the CDK version
       - name: CDK NPM Version From Tag
@@ -52,16 +43,17 @@ jobs:
         run: echo Latest NPM CDK Version $VER
         
       - name: Latest Github Release Tag
-        uses: martinbeentjes/npm-get-version-action@v1.3.1
+        uses: rez0n/actions-github-release@v2.0
         id: cdk_release2
-        with:
-          path: package/aws-cdk
-
+        env:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: "aws/aws-cdk"
+          type: "latest"
       # Remove the v from version tag
       - name: CDK Version From Tag
         id: get-ver2
         run: |
-          ver=$(echo ${{steps.cdk_release2.outputs.current-version}} | cut -dv -f2)
+          ver=$(echo ${{steps.cdk_release2.outputs.release}} | cut -dv -f2)
           echo "::set-output name=cdkver::$ver"
       # Debug output the CDK version
       - name: CDK CLI Version From Tag
